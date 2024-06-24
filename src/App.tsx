@@ -1,5 +1,6 @@
 import { Outlet, useNavigate } from 'react-router-dom';
 import { ClerkProvider } from '@clerk/clerk-react';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import AppFooter from './Components/AppFooter';
 import AppHeader from './Components/AppHeader';
 
@@ -9,23 +10,35 @@ if (!PUBLISHABLE_KEY) {
   throw new Error('Missing Publishable Key');
 }
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
+
 const App: React.FC = () => {
   const navigate = useNavigate();
+  const SIGNUP_REDIRECT_URL = import.meta.env.VITE_CLERK_SIGN_UP_FORCE_REDIRECT_URL;
 
   return (
-    <ClerkProvider
-      routerPush={(to) => navigate(to)}
-      routerReplace={(to) => navigate(to, { replace: true })}
-      publishableKey={PUBLISHABLE_KEY}
-    >
-      <div className="flex flex-col min-h-screen">
-        <AppHeader />
-        <main className=" container mx-auto flex-1 py-10 flex my-auto">
-          <Outlet />
-        </main>
-        <AppFooter />
-      </div>
-    </ClerkProvider>
+    <QueryClientProvider client={queryClient}>
+      <ClerkProvider
+        routerPush={(to) => navigate(to)}
+        routerReplace={(to) => navigate(to, { replace: true })}
+        publishableKey={PUBLISHABLE_KEY}
+        signUpForceRedirectUrl={`${SIGNUP_REDIRECT_URL}/auth-callback`}
+      >
+        <div className="flex flex-col min-h-screen">
+          <AppHeader />
+          <main className=" container mx-auto flex-1 py-10 flex my-auto">
+            <Outlet />
+          </main>
+          <AppFooter />
+        </div>
+      </ClerkProvider>
+    </QueryClientProvider>
   );
 };
 export default App;

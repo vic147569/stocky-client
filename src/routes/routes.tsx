@@ -3,6 +3,7 @@ import App from '@/App';
 import HomePage from '@/pages/Home';
 import SignInPage from '@/pages/sign-in';
 import SignUpPage from '@/pages/sign-up';
+import AuthCallbackPage from '@/pages/AuthCallbackPage';
 
 const router = createBrowserRouter([
   {
@@ -11,6 +12,7 @@ const router = createBrowserRouter([
       { path: '/', element: <HomePage /> },
       { path: '/sign-in/*', element: <SignInPage /> },
       { path: '/sign-up/*', element: <SignUpPage /> },
+      { path: '/auth-callback', element: <AuthCallbackPage /> },
     ],
   },
 ]);
