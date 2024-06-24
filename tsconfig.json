@@ -1,5 +1,11 @@
 {
   "compilerOptions": {
+    /* Absolute Imports */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+
     "target": "ES2020",
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
@@ -19,16 +25,8 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "types": ["vitest/globals", "@testing-library/jest-dom"],
-
-    /* Absolute Imports */
-    "baseUrl": "./",
-    "paths": {
-      "@/Assets/*": ["*", "src/Assets/*"],
-      "@/Components/*": ["*", "src/Components/*"],
-      "@/*": ["./src/*"]
-    }
+    "types": ["vitest/globals", "@testing-library/jest-dom"]
   },
-  "include": ["./"],
+  "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
