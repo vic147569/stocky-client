@@ -7,9 +7,7 @@ const App: React.FC = () => (
   <Router>
     <div className="flex flex-col min-h-screen">
       <AppHeader />
-      <div className=" container mx-auto flex-1 py-10">
-        <AppRoutes />
-      </div>
+      <AppRoutes />
       <AppFooter />
     </div>
   </Router>
