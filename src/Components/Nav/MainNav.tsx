@@ -1,13 +1,19 @@
-import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react';
+import { SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/Components/ui/button';
 import MainMenu from './MainMenu';
 
 const MainNav = () => (
   <div>
     <SignedOut>
-      <Button>
-        <SignInButton />
-      </Button>
+      <div className=" flex gap-3">
+        <Button>
+          <Link to="/sign-in">Sign In</Link>
+        </Button>
+        <Button>
+          <Link to="/sign-up">Sign Up</Link>
+        </Button>
+      </div>
     </SignedOut>
     <SignedIn>
       <div className=" flex gap-3">
