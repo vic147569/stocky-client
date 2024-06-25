@@ -1,8 +1,7 @@
 import { Outlet, useNavigate } from 'react-router-dom';
 import { ClerkProvider } from '@clerk/clerk-react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import AppFooter from './Components/AppFooter';
-import AppHeader from './Components/AppHeader';
+import Layout from './layout/layout';
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -30,13 +29,9 @@ const App: React.FC = () => {
         publishableKey={PUBLISHABLE_KEY}
         signUpForceRedirectUrl={`${SIGNUP_REDIRECT_URL}/auth-callback`}
       >
-        <div className="flex flex-col min-h-screen">
-          <AppHeader />
-          <main className=" container mx-auto flex-1 py-10 flex my-auto">
-            <Outlet />
-          </main>
-          <AppFooter />
-        </div>
+        <Layout>
+          <Outlet />
+        </Layout>
       </ClerkProvider>
     </QueryClientProvider>
   );
