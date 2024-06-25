@@ -8,9 +8,9 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 export const useCreateUser = () => {
   const { getToken } = useAuth();
   const createUserRequest = async (user: CreateUserRequest) => {
-    const token = getToken();
+    const token = await getToken();
     const response = await fetch(`${API_BASE_URL}/api/user`, {
-      method: 'GET',
+      method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
