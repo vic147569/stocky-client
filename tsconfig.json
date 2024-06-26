@@ -3,7 +3,9 @@
     /* Absolute Imports */
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@/ui/*": ["*", "src/Components/ui/*"],
+      "@/Components/*": ["*", "src/Components/*"]
     },
 
     "target": "ES2020",
