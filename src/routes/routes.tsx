@@ -4,6 +4,8 @@ import HomePage from '@/Pages/Home';
 import SignInPage from '@/Pages/sign-in';
 import SignUpPage from '@/Pages/sign-up';
 import AuthCallbackPage from '@/Pages/AuthCallbackPage';
+import ProfilePage from '@/Pages/ProfilePage';
+import WatchListPage from '@/Pages/WatchListPage';
 
 const router = createBrowserRouter([
   {
@@ -13,6 +15,8 @@ const router = createBrowserRouter([
       { path: '/sign-in/*', element: <SignInPage /> },
       { path: '/sign-up/*', element: <SignUpPage /> },
       { path: '/auth-callback', element: <AuthCallbackPage /> },
+      { path: '/user-profile', element: <ProfilePage /> },
+      { path: '/watchlist', element: <WatchListPage /> },
     ],
   },
 ]);
