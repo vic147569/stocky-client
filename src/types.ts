@@ -7,5 +7,6 @@ export type User = {
 
 export type CreateUserRequest = {
   userId: string;
+  name: string;
   email: string;
 };
