@@ -10,3 +10,9 @@ export type CreateUserRequest = {
   name: string;
   email: string;
 };
+
+export type UpdateUserRequest = {
+  name: string;
+  email: string;
+  phone: string;
+};

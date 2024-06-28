@@ -9,9 +9,9 @@ import { Button } from '@/Components/ui/button';
 import MyFormTitle from './MyFormTitle';
 import MyFormField from './MyFormField';
 
-type Props = { currentUser: User };
+type Props = { currentUser: User; onSave: (userProfileData: UserFormData) => void; isLoading: boolean };
 
-const ProfileForm = ({ currentUser }: Props) => {
+const ProfileForm = ({ currentUser, onSave, isLoading }: Props) => {
   // use react hook form and zod resolver
   const form = useForm<UserFormData>({
     resolver: zodResolver(formScema),
@@ -25,12 +25,14 @@ const ProfileForm = ({ currentUser }: Props) => {
 
   return (
     <Form {...form}>
-      <form className=" space-y-4 bg-gray-50 rounded-lg md:p-10 min-h-[550px]">
+      <form onSubmit={form.handleSubmit(onSave)} className=" space-y-4 bg-gray-50 rounded-lg md:p-10 min-h-[550px]">
         <MyFormTitle />
         <MyFormField name="name" label="Name" />
         <MyFormField name="email" label="Email" />
         <MyFormField name="phone" label="Phone" />
-        <Button type="submit">Submit</Button>
+        <Button type="submit" disabled={isLoading}>
+          {isLoading ? 'Loading' : 'Submit'}
+        </Button>
       </form>
     </Form>
   );

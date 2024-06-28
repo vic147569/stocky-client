@@ -1,7 +1,7 @@
 import { useAuth } from '@clerk/clerk-react';
 import { useMutation, useQuery } from 'react-query';
 import { toast } from 'sonner';
-import { CreateUserRequest, User } from '@/types';
+import { CreateUserRequest, UpdateUserRequest, User } from '@/types';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -50,4 +50,39 @@ export const useGetUser = () => {
   }
 
   return { currentUser, isLoading };
+};
+
+export const useUpdateUser = () => {
+  const { getToken } = useAuth();
+
+  const updateUserRequest = async (formData: UpdateUserRequest) => {
+    const token = await getToken();
+    const response = await fetch(`${API_BASE_URL}/api/user`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to update user');
+    }
+
+    return response.json();
+  };
+
+  const { mutateAsync: updateUser, isLoading, isSuccess, error, reset } = useMutation(updateUserRequest);
+
+  if (isSuccess) {
+    toast.success('User profile update');
+  }
+
+  if (error) {
+    toast.error(error.toString());
+    reset();
+  }
+
+  return { updateUser, isSuccess, isLoading, error, reset };
 };
