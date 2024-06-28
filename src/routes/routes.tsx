@@ -6,6 +6,7 @@ import SignUpPage from '@/Pages/sign-up';
 import AuthCallbackPage from '@/Pages/AuthCallbackPage';
 import ProfilePage from '@/Pages/ProfilePage';
 import WatchListPage from '@/Pages/WatchListPage';
+import DetailPage from '@/Pages/Detail';
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,7 @@ const router = createBrowserRouter([
       { path: '/auth-callback', element: <AuthCallbackPage /> },
       { path: '/user-profile', element: <ProfilePage /> },
       { path: '/watchlist', element: <WatchListPage /> },
+      { path: '/stock/:symbol', element: <DetailPage /> },
     ],
   },
 ]);
