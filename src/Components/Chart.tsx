@@ -2,7 +2,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import * as d3 from 'd3';
 
-interface DataPoint {
+export interface DataPoint {
   date: Date;
   value: number;
 }
@@ -10,86 +10,6 @@ interface DataPoint {
 interface LineChartProps {
   data: DataPoint[];
 }
-
-// const LineChart: React.FC<LineChartProps> = ({ data }) => {
-//   const svgRef = useRef<SVGSVGElement | null>(null);
-//   const wrapperRef = useRef<HTMLDivElement | null>(null);
-//   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-
-//   useEffect(() => {
-//     const resizeObserver = new ResizeObserver((entries) => {
-//       if (!entries || entries.length === 0) return;
-//       const entry = entries[0];
-//       setDimensions({
-//         width: entry.contentRect.width,
-//         height: entry.contentRect.height,
-//       });
-//     });
-
-//     if (wrapperRef.current) {
-//       resizeObserver.observe(wrapperRef.current);
-//     }
-
-//     return () => {
-//       if (wrapperRef.current) {
-//         resizeObserver.unobserve(wrapperRef.current);
-//       }
-//     };
-//   }, []);
-
-//   useEffect(() => {
-//     if (!data.length || dimensions.width === 0 || dimensions.height === 0) return;
-
-//     const svg = d3
-//       .select(svgRef.current)
-//       .attr('width', dimensions.width)
-//       .attr('height', dimensions.height)
-//       .style('background', '#000000')
-//       .style('overflow', 'visible');
-
-//     const xScale = d3
-//       .scaleTime()
-//       .domain([d3.min(data, (d) => d.date)!, d3.max(data, (d) => d.date)!])
-//       .range([0, dimensions.width]);
-
-//     const yScale = d3
-//       .scaleLinear()
-//       .domain([0, d3.max(data, (d) => d.value)!])
-//       .range([dimensions.height, 0]);
-
-//     const line = d3
-//       .line<DataPoint>()
-//       .x((d) => xScale(d.date))
-//       .y((d) => yScale(d.value))
-//       .curve(d3.curveMonotoneX);
-
-//     svg
-//       .selectAll('.line')
-//       .data([data])
-//       .join('path')
-//       .attr('class', 'line')
-//       .attr('d', line)
-//       .attr('fill', 'none')
-//       .attr('stroke', 'green')
-//       .attr('stroke-width', 3);
-
-//     const xAxis = d3.axisBottom<Date>(xScale);
-//     const yAxis = d3.axisLeft<number>(yScale);
-
-//     svg.select('.x-axis').attr('transform', `translate(0, ${dimensions.height})`).call(xAxis);
-
-//     svg.select('.y-axis').call(yAxis);
-//   }, [data, dimensions]);
-
-//   return (
-//     <div ref={wrapperRef} className="w-full h-64 md:h-96">
-//       <svg ref={svgRef}>
-//         <g className="x-axis" />
-//         <g className="y-axis" />
-//       </svg>
-//     </div>
-//   );
-// };
 
 const LineChart: React.FC<LineChartProps> = ({ data }) => {
   const svgRef = useRef<SVGSVGElement | null>(null);
@@ -153,7 +73,7 @@ const LineChart: React.FC<LineChartProps> = ({ data }) => {
       .attr('stroke', '#22c55e')
       .attr('stroke-width', 2);
 
-    const xAxis = d3.axisBottom<Date>(xScale).ticks(5);
+    const xAxis = d3.axisBottom<Date>(xScale).ticks(10);
     const yAxis = d3.axisLeft<number>(yScale).ticks(5);
 
     svg

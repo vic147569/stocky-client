@@ -21,20 +21,47 @@ type StockQuote = {
   EPS: number;
   PE: number;
 };
+type Price = {
+  date: Date;
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+  adjClose: number;
+  volume: number;
+};
+type StockHistory = { symbol: string; price: Price[] };
 
 export const useGetStockQuote = (symbol?: string) => {
   const getStockQuoteRequest = async (): Promise<StockQuote> => {
-    const response = await fetch(`${API_BASE_URL}/api/stocks/${symbol}`);
+    const response = await fetch(`${API_BASE_URL}/api/stocks/quote/${symbol}`);
 
     if (!response.ok) {
-      throw new Error('Cannot get stock');
+      throw new Error('Cannot get stock quote');
     }
 
     return response.json();
   };
 
-  const { data: stockQuote, isLoading } = useQuery('fetchStock', getStockQuoteRequest, { enabled: !!symbol });
+  const { data: stockQuote, isLoading } = useQuery('fetchStockQuote', getStockQuoteRequest, { enabled: !!symbol });
   return { stockQuote, isLoading };
+};
+
+export const useGetStockHistory = (symbol?: string) => {
+  const getStockHistoryRequest = async (): Promise<StockHistory> => {
+    const response = await fetch(`${API_BASE_URL}/api/stocks/history/${symbol}`);
+
+    if (!response.ok) {
+      throw new Error('Cannot get stock history');
+    }
+
+    return response.json();
+  };
+
+  const { data: stockHistory, isLoading } = useQuery('fetchStockHistory', getStockHistoryRequest, {
+    enabled: !!symbol,
+  });
+  return { stockHistory, isLoading };
 };
 
 export const a = 5;
