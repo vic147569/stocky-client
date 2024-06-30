@@ -1,3 +1,13 @@
-const WatchListPage = () => <div>WatchListPage</div>;
+import { useGetWatchlist } from '@/Api/WatchlistApi';
 
-export default WatchListPage;
+const WatchlistPage = () => {
+  const { watchlist } = useGetWatchlist();
+
+  return (
+    <div>
+      {watchlist?.userId} : {watchlist?.stockList} ???
+    </div>
+  );
+};
+
+export default WatchlistPage;
