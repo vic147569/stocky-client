@@ -5,6 +5,15 @@ export type User = {
   phone: string;
 };
 
+export type Watchlist = {
+  userId: string;
+  stockList: string[];
+};
+
+export type IsInWatchlist = {
+  isInWatchlist: boolean;
+};
+
 export type CreateUserRequest = {
   userId: string;
   name: string;

@@ -1,6 +1,6 @@
 import { useAuth } from '@clerk/clerk-react';
 import { useMutation, useQuery } from 'react-query';
-import { CreateWatchlistRequest } from '@/types';
+import { CreateWatchlistRequest, IsInWatchlist, Watchlist } from '@/types';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -25,11 +25,6 @@ export const useCreateWatchlist = () => {
   return { createWatchlist, isLoading, isSuccess };
 };
 
-type Watchlist = {
-  userId: string;
-  stockList: string[];
-};
-
 export const useGetWatchlist = () => {
   const { getToken } = useAuth();
   const getWatchlistRequest = async (): Promise<Watchlist> => {
@@ -48,4 +43,30 @@ export const useGetWatchlist = () => {
   };
   const { data: watchlist, isLoading, error } = useQuery('fetchWatchlist', getWatchlistRequest);
   return { watchlist, isLoading, error };
+};
+
+export const useGetIsInWatchlist = (symbol?: string) => {
+  const { getToken } = useAuth();
+  const getIsInWatchlistRequest = async (): Promise<IsInWatchlist> => {
+    const token = await getToken();
+    const response = await fetch(`${API_BASE_URL}/api/watchlist/${symbol}`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    if (!response) {
+      throw new Error('Failed to get isInWatchlist');
+    }
+    return response.json();
+  };
+
+  const {
+    data: isInWatchlist,
+    isLoading,
+    error,
+  } = useQuery('fetchIsInWatchlist', getIsInWatchlistRequest, { enabled: !!symbol });
+
+  return { isInWatchlist, isLoading, error };
 };

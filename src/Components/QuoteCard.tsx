@@ -4,12 +4,16 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/
 import { Toggle } from './ui/toggle';
 import format, { mod } from '@/utils';
 import { useGetStockQuote } from '@/Api/StockApi';
+import { useGetIsInWatchlist } from '@/Api/WatchlistApi';
 
 const QuoteCard = () => {
   const { symbol } = useParams();
-  const { stockQuote, isLoading } = useGetStockQuote(symbol);
+  const { stockQuote, isLoading: isGetStockQuoteLoading } = useGetStockQuote(symbol);
+  const { isInWatchlist, isLoading: isGetIsInWatchlistLoading } = useGetIsInWatchlist(symbol);
 
-  if (isLoading) {
+  const res = isInWatchlist?.isInWatchlist;
+
+  if (isGetStockQuoteLoading || isGetIsInWatchlistLoading) {
     return <div>Loading...</div>;
   }
 
@@ -21,7 +25,7 @@ const QuoteCard = () => {
           <CardDescription>{stockQuote?.name}</CardDescription>
         </div>
         <div>
-          <Toggle>
+          <Toggle pressed={res}>
             <Star />
           </Toggle>
         </div>

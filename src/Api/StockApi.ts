@@ -63,5 +63,3 @@ export const useGetStockHistory = (symbol?: string) => {
   });
   return { stockHistory, isLoading };
 };
-
-export const a = 5;
