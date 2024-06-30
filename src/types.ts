@@ -16,3 +16,8 @@ export type UpdateUserRequest = {
   email: string;
   phone: string;
 };
+
+export type CreateWatchlistRequest = {
+  userId: string;
+  stockList: string[];
+};
