@@ -1,21 +1,32 @@
 import { Star } from 'lucide-react';
 import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Toggle } from './ui/toggle';
 import format, { mod } from '@/utils';
 import { useGetStockQuote } from '@/Api/StockApi';
-import { useGetIsInWatchlist } from '@/Api/WatchlistApi';
+import { useGetIsInWatchlist, useUpdateWatchlist } from '@/Api/WatchlistApi';
 
 const QuoteCard = () => {
   const { symbol } = useParams();
   const { stockQuote, isLoading: isGetStockQuoteLoading } = useGetStockQuote(symbol);
   const { isInWatchlist, isLoading: isGetIsInWatchlistLoading } = useGetIsInWatchlist(symbol);
-
+  const { updateWatchlist } = useUpdateWatchlist(symbol);
   const res = isInWatchlist?.isInWatchlist;
+  const [status, setStatus] = useState(res);
+
+  useEffect(() => {
+    setStatus(res);
+  }, [res]);
 
   if (isGetStockQuoteLoading || isGetIsInWatchlistLoading) {
     return <div>Loading...</div>;
   }
+
+  const handleToggle = async () => {
+    const updatedStatus = await updateWatchlist();
+    setStatus(updatedStatus.stockList.includes(symbol as string));
+  };
 
   return (
     <Card className=" bg-slate-800 text-white">
@@ -25,7 +36,7 @@ const QuoteCard = () => {
           <CardDescription>{stockQuote?.name}</CardDescription>
         </div>
         <div>
-          <Toggle pressed={res}>
+          <Toggle pressed={status} onPressedChange={handleToggle}>
             <Star />
           </Toggle>
         </div>

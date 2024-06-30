@@ -70,3 +70,25 @@ export const useGetIsInWatchlist = (symbol?: string) => {
 
   return { isInWatchlist, isLoading, error };
 };
+
+export const useUpdateWatchlist = (symbol?: string) => {
+  const { getToken } = useAuth();
+  const updateWatchlistRequest = async (): Promise<Watchlist> => {
+    const token = await getToken();
+    const response = await fetch(`${API_BASE_URL}/api/watchlist/${symbol}`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    if (!response.ok) {
+      throw new Error('Failed to update watchlist');
+    }
+    return response.json();
+  };
+
+  const { mutateAsync: updateWatchlist, isSuccess, isLoading, error } = useMutation(updateWatchlistRequest);
+
+  return { updateWatchlist, isSuccess, isLoading, error };
+};
