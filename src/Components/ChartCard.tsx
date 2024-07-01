@@ -15,15 +15,17 @@ const ChartCard = () => {
     return <div>Loading</div>;
   }
 
+  const themeColor = data!.at(-1)!.value > data![0].value ? '#22c55e' : '#ef4444';
+
   return (
     <Card className=" bg-slate-800 text-white">
       <CardHeader>
         <CardTitle>Chart</CardTitle>
-        <CardDescription>Five day chart</CardDescription>
+        <CardDescription>YTD chart</CardDescription>
       </CardHeader>
       <CardContent>
         <div className=" p-5">
-          <LineChart data={data as DataPoint[]} />
+          <LineChart data={data as DataPoint[]} themeColor={themeColor} />
         </div>
       </CardContent>
     </Card>

@@ -31,6 +31,7 @@ type Price = {
   volume: number;
 };
 type StockHistory = { symbol: string; price: Price[] };
+type StockRecommendation = { result: string };
 
 export const useGetStockQuote = (symbol?: string) => {
   const getStockQuoteRequest = async (): Promise<StockQuote> => {
@@ -62,4 +63,16 @@ export const useGetStockHistory = (symbol?: string) => {
     enabled: !!symbol,
   });
   return { stockHistory, isLoading };
+};
+
+export const useGetStockRecommendation = (symbol?: string) => {
+  const getStockRecommendation = async (): Promise<StockRecommendation> => {
+    const response = await fetch(`${API_BASE_URL}/api/stocks/recommendation/${symbol}`);
+    if (!response.ok) throw new Error('Cannot get stock recommendation');
+    return response.json();
+  };
+  const { data: stockRecommendation, isLoading } = useQuery('fetchStockRecommendation', getStockRecommendation, {
+    enabled: !!symbol,
+  });
+  return { stockRecommendation, isLoading };
 };

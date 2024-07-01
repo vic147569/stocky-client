@@ -4,12 +4,13 @@ import { useEffect, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Toggle } from './ui/toggle';
 import format, { mod } from '@/utils';
-import { useGetStockQuote } from '@/Api/StockApi';
+import { useGetStockQuote, useGetStockRecommendation } from '@/Api/StockApi';
 import { useGetIsInWatchlist, useUpdateWatchlist } from '@/Api/WatchlistApi';
 
 const QuoteCard = () => {
   const { symbol } = useParams();
   const { stockQuote, isLoading: isGetStockQuoteLoading } = useGetStockQuote(symbol);
+  const { stockRecommendation, isLoading: isGetStockRecommendationLoading } = useGetStockRecommendation(symbol);
   const { isInWatchlist, isLoading: isGetIsInWatchlistLoading } = useGetIsInWatchlist(symbol);
   const { updateWatchlist } = useUpdateWatchlist(symbol);
   const res = isInWatchlist?.isInWatchlist;
@@ -19,7 +20,7 @@ const QuoteCard = () => {
     setStatus(res);
   }, [res]);
 
-  if (isGetStockQuoteLoading || isGetIsInWatchlistLoading) {
+  if (isGetStockQuoteLoading || isGetIsInWatchlistLoading || isGetStockRecommendationLoading) {
     return <div>Loading...</div>;
   }
 
@@ -28,12 +29,19 @@ const QuoteCard = () => {
     setStatus(updatedStatus.stockList.includes(symbol as string));
   };
 
+  const themeColor1 = stockRecommendation?.result.includes('Buy') ? 'text-green-500' : 'text-red-500';
+  const themeColor2 = stockQuote!.change > 0 ? 'text-green-500' : 'text-red-500';
+
   return (
     <Card className=" bg-slate-800 text-white">
-      <CardHeader className=" flex flex-row justify-between">
+      <CardHeader className=" flex flex-row justify-between items-center">
         <div>
           <CardTitle className=" text-5xl font-bold">{stockQuote?.symbol}</CardTitle>
           <CardDescription>{stockQuote?.name}</CardDescription>
+        </div>
+        <div className=" text-2xl flex gap-3">
+          Recommendation:
+          <div className={themeColor1}>{stockRecommendation?.result}</div>
         </div>
         <div>
           <Toggle pressed={status} onPressedChange={handleToggle}>
@@ -54,16 +62,10 @@ const QuoteCard = () => {
             Low: <div>{format(stockQuote?.dayLow)}</div>
           </div>
           <div className=" flex justify-between">
-            Change:{' '}
-            <div className={`${(stockQuote?.changePercent as number) > 0 ? 'text-green-500' : 'text-red-500'}`}>
-              {format(stockQuote?.change)}
-            </div>
+            Change: <div className={themeColor2}>{format(stockQuote?.change)}</div>
           </div>
           <div className={`flex justify-between `}>
-            Change%:{' '}
-            <div className={`${(stockQuote?.changePercent as number) > 0 ? 'text-green-500' : 'text-red-500'}`}>
-              {format(stockQuote?.changePercent)}%
-            </div>
+            Change%: <div className={themeColor2}>{format(stockQuote?.changePercent)}%</div>
           </div>
           <div className=" flex justify-between">
             volume: <div>{mod(stockQuote?.vol)}</div>

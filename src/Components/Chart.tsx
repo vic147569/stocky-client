@@ -9,9 +9,10 @@ export interface DataPoint {
 
 interface LineChartProps {
   data: DataPoint[];
+  themeColor: string;
 }
 
-const LineChart: React.FC<LineChartProps> = ({ data }) => {
+const LineChart: React.FC<LineChartProps> = ({ data, themeColor }) => {
   const svgRef = useRef<SVGSVGElement | null>(null);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
@@ -70,7 +71,7 @@ const LineChart: React.FC<LineChartProps> = ({ data }) => {
       .attr('class', 'line')
       .attr('d', line)
       .attr('fill', 'none')
-      .attr('stroke', '#22c55e')
+      .attr('stroke', `${themeColor}`)
       .attr('stroke-width', 2);
 
     const xAxis = d3.axisBottom<Date>(xScale).ticks(10);
