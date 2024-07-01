@@ -20,6 +20,10 @@ const QuoteCard = () => {
     setStatus(res);
   }, [res]);
 
+  if (!stockQuote) {
+    return <div>Stock not found</div>;
+  }
+
   if (isGetStockQuoteLoading || isGetIsInWatchlistLoading || isGetStockRecommendationLoading) {
     return <div>Loading...</div>;
   }

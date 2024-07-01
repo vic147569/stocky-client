@@ -11,18 +11,15 @@ const getStockQuoteRequest = async (symbol?: string): Promise<StockQuote> => {
 export const useGetStockQuote = (symbol?: string) =>
   useQuery(['stockQuote', symbol], () => getStockQuoteRequest(symbol));
 
-export const useGetStockHistory = (symbol?: string) => {
-  const getStockHistoryRequest = async (): Promise<StockHistory> => {
-    const response = await fetch(`${API_BASE_URL}/api/stocks/history/${symbol}`);
-    if (!response.ok) throw new Error('Cannot get stock history');
-    return response.json();
-  };
-
-  const { data: stockHistory, isLoading } = useQuery('fetchStockHistory', getStockHistoryRequest, {
+const getStockHistoryRequest = async (symbol?: string): Promise<StockHistory> => {
+  const response = await fetch(`${API_BASE_URL}/api/stocks/history/${symbol}`);
+  if (!response.ok) throw new Error('Cannot get stock history');
+  return response.json();
+};
+export const useGetStockHistory = (symbol?: string) =>
+  useQuery(['fetchStockHistory', symbol], () => getStockHistoryRequest(symbol), {
     enabled: !!symbol,
   });
-  return { stockHistory, isLoading };
-};
 
 const getStockRecommendation = async (symbol?: string): Promise<StockRecommendation> => {
   const response = await fetch(`${API_BASE_URL}/api/stocks/recommendation/${symbol}`);

@@ -45,7 +45,11 @@ const SearchBar = ({ onSubmit, searchQuery }: Props) => {
           render={({ field }) => (
             <FormItem className=" flex-1">
               <FormControl>
-                <Input {...field} className="border-none shadow-none text-xl focus-visible:ring-0" />
+                <Input
+                  {...field}
+                  className="border-none shadow-none text-xl focus-visible:ring-0"
+                  placeholder="Search stock by symbol"
+                />
               </FormControl>
             </FormItem>
           )}
