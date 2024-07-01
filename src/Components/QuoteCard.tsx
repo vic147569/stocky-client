@@ -9,9 +9,9 @@ import { useGetIsInWatchlist, useUpdateWatchlist } from '@/Api/WatchlistApi';
 
 const QuoteCard = () => {
   const { symbol } = useParams();
-  const { stockQuote, isLoading: isGetStockQuoteLoading } = useGetStockQuote(symbol);
-  const { stockRecommendation, isLoading: isGetStockRecommendationLoading } = useGetStockRecommendation(symbol);
-  const { isInWatchlist, isLoading: isGetIsInWatchlistLoading } = useGetIsInWatchlist(symbol);
+  const { data: stockQuote, isLoading: isGetStockQuoteLoading } = useGetStockQuote(symbol);
+  const { data: stockRecommendation, isLoading: isGetStockRecommendationLoading } = useGetStockRecommendation(symbol);
+  const { data: isInWatchlist, isLoading: isGetIsInWatchlistLoading } = useGetIsInWatchlist(symbol);
   const { updateWatchlist } = useUpdateWatchlist(symbol);
   const res = isInWatchlist?.isInWatchlist;
   const [status, setStatus] = useState(res);
@@ -26,27 +26,29 @@ const QuoteCard = () => {
 
   const handleToggle = async () => {
     const updatedStatus = await updateWatchlist();
-    setStatus(updatedStatus.stockList.includes(symbol as string));
+    setStatus(updatedStatus.stockList.includes(symbol?.toUpperCase() as string));
   };
 
-  const themeColor1 = stockRecommendation?.result.includes('Buy') ? 'text-green-500' : 'text-red-500';
+  let themeColor1 = '';
+  if (stockRecommendation?.result.includes('Buy')) themeColor1 = 'text-green-500';
+  if (stockRecommendation?.result.includes('Sell')) themeColor1 = 'text-red-500';
   const themeColor2 = stockQuote!.change > 0 ? 'text-green-500' : 'text-red-500';
 
   return (
     <Card className=" bg-slate-800 text-white">
-      <CardHeader className=" flex flex-row justify-between items-center">
-        <div>
-          <CardTitle className=" text-5xl font-bold">{stockQuote?.symbol}</CardTitle>
-          <CardDescription>{stockQuote?.name}</CardDescription>
+      <CardHeader className=" flex flex-col justify-between ">
+        <div className="flex items-center justify-between">
+          <div>
+            <CardTitle className=" text-5xl font-bold">{stockQuote?.symbol}</CardTitle>
+            <CardDescription>{stockQuote?.name}</CardDescription>
+          </div>
+          <Toggle pressed={status} onPressedChange={handleToggle}>
+            <Star />
+          </Toggle>
         </div>
         <div className=" text-2xl flex gap-3">
           Recommendation:
           <div className={themeColor1}>{stockRecommendation?.result}</div>
-        </div>
-        <div>
-          <Toggle pressed={status} onPressedChange={handleToggle}>
-            <Star />
-          </Toggle>
         </div>
       </CardHeader>
       <CardContent className=" flex flex-col gap-4">
@@ -78,7 +80,7 @@ const QuoteCard = () => {
           </div>
           <div className=" flex justify-between">
             Dividend Yield:
-            <div>{format(stockQuote?.dividend)}</div>
+            <div>{String(format(stockQuote?.dividend))}</div>
           </div>
           <div className=" flex justify-between">
             EPS:
