@@ -6,10 +6,17 @@ export default mergeConfig(
   viteConfig,
   defineConfig({
     test: {
+      root: './',
       globals: true,
       environment: 'jsdom',
       setupFiles: './tests/setup.ts',
-      include: ['**/*.test.tsx'],
+      include: ['./**/*.test.{ts,tsx}'],
+      coverage: {
+        include: ['**/src/**'],
+        exclude: ['**/tests/**'],
+        reporter: ['text', 'json', 'html'],
+        reportsDirectory: './tests/coverage',
+      },
     },
   }),
 );

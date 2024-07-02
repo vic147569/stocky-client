@@ -6,9 +6,9 @@ import Layout from './Layout/layout';
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
-if (!PUBLISHABLE_KEY) {
-  throw new Error('Missing Publishable Key');
-}
+// if (!PUBLISHABLE_KEY) {
+//   throw new Error('Missing Publishable Key');
+// }
 
 const queryClient = new QueryClient({
   defaultOptions: {
