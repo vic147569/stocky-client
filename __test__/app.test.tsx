@@ -1,10 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { vi } from 'vitest';
 import { BrowserRouter } from 'react-router-dom';
-// import { ClerkProvider } from '@clerk/clerk-react';
-// import { QueryClient, QueryClientProvider } from 'react-query';
-// import { Toaster } from 'sonner';
-// import Layout from './Layout/layout';
 import App from '@/App';
 
 // Mock useNavigate from react-router-dom
@@ -59,20 +55,4 @@ describe('App Component', () => {
     // Check if the Layout component is rendered
     expect(screen.getByText('Toaster')).toBeInTheDocument();
   });
-
-  // it('throws an error if PUBLISHABLE_KEY is missing', () => {
-  //   const originalEnv = { ...import.meta.env };
-  //   import.meta.env.VITE_CLERK_PUBLISHABLE_KEY = '';
-
-  //   expect(() => {
-  //     render(
-  //       <BrowserRouter>
-  //         <App />
-  //       </BrowserRouter>,
-  //     );
-  //   }).toThrow('Missing Publishable Key');
-
-  // Restore the original environment
-  //   import.meta.env = originalEnv;
-  // });
 });
