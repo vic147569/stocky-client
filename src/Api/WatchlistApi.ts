@@ -26,24 +26,23 @@ export const useCreateWatchlist = () => {
   return { createWatchlist, isLoading, isSuccess };
 };
 
+const getWatchlistRequest = async (getToken: GetToken): Promise<Watchlist> => {
+  const token = await getToken();
+  const response = await fetch(`${API_BASE_URL}/api/watchlist`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+  });
+  if (!response.ok) {
+    throw new Error('Failed to get watchlist');
+  }
+  return response.json();
+};
 export const useGetWatchlist = () => {
   const { getToken } = useAuth();
-  const getWatchlistRequest = async (): Promise<Watchlist> => {
-    const token = await getToken();
-    const response = await fetch(`${API_BASE_URL}/api/watchlist`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-    });
-    if (!response.ok) {
-      throw new Error('Failed to get watchlist');
-    }
-    return response.json();
-  };
-  const { data: watchlist, isLoading, error } = useQuery('fetchWatchlist', getWatchlistRequest);
-  return { watchlist, isLoading, error };
+  return useQuery(['fetchWatchlist'], () => getWatchlistRequest(getToken));
 };
 
 export const useUpdateWatchlist = (symbol?: string) => {
@@ -82,10 +81,8 @@ const getIsInWatchlistRequest = async (symbol: string, getToken: GetToken): Prom
   }
   return response.json();
 };
-
 export const useGetIsInWatchlist = (symbol?: string) => {
   const { getToken } = useAuth();
-
   return useQuery(['isInWatchlist', symbol], () => getIsInWatchlistRequest(symbol as string, getToken), {
     enabled: !!symbol,
   });
