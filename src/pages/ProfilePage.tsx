@@ -2,7 +2,7 @@ import { useGetUser, useUpdateUser } from '@/Api/UserApi';
 import ProfileForm from '@/Form/ProfileForm';
 
 const ProfilePage = () => {
-  const { currentUser, isLoading: isGetLoading } = useGetUser();
+  const { data: currentUser, isLoading: isGetLoading } = useGetUser();
   const { updateUser, isLoading: isUpdateLoading } = useUpdateUser();
 
   if (isGetLoading) {

@@ -1,6 +1,7 @@
 import { useAuth } from '@clerk/clerk-react';
 import { useMutation, useQuery } from 'react-query';
 import { toast } from 'sonner';
+import { GetToken } from '@clerk/types';
 import { CreateUserRequest, UpdateUserRequest, User } from '@/types';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -25,31 +26,30 @@ export const useCreateUser = () => {
   return { createUser, isLoading, isError, isSuccess };
 };
 
+const getUserRequest = async (getToken: GetToken): Promise<User> => {
+  const token = await getToken();
+  const response = await fetch(`${API_BASE_URL}/api/user`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+  });
+  if (!response.ok) {
+    throw new Error('Failed to get user');
+  }
+  return response.json();
+};
 export const useGetUser = () => {
   const { getToken } = useAuth();
 
-  const getUserRequest = async (): Promise<User> => {
-    const token = await getToken();
-    const response = await fetch(`${API_BASE_URL}/api/user`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-    });
-    if (!response.ok) {
-      throw new Error('Failed to get user');
-    }
-    return response.json();
-  };
+  return useQuery(['fetchCurrentUser'], () => getUserRequest(getToken));
 
-  const { data: currentUser, isLoading, error } = useQuery('fetchCurrentUser', getUserRequest);
+  // if (error) {
+  //   toast.error(error.toString());
+  // }
 
-  if (error) {
-    toast.error(error.toString());
-  }
-
-  return { currentUser, isLoading };
+  // return { currentUser, isLoading };
 };
 
 export const useUpdateUser = () => {
@@ -73,16 +73,16 @@ export const useUpdateUser = () => {
     return response.json();
   };
 
-  const { mutateAsync: updateUser, isLoading, isSuccess, error, reset } = useMutation(updateUserRequest);
+  const { mutateAsync: updateUser, isLoading, isSuccess, isError, reset } = useMutation(updateUserRequest);
 
   if (isSuccess) {
     toast.success('User profile update');
   }
 
-  if (error) {
-    toast.error(error.toString());
+  if (isError) {
+    toast.error('Fail to update user');
     reset();
   }
 
-  return { updateUser, isSuccess, isLoading, error, reset };
+  return { updateUser, isSuccess, isLoading, isError, reset };
 };
