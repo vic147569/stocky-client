@@ -140,7 +140,7 @@ describe('useUpdateUser', () => {
       expect(
         async () =>
           await result.current.updateUser({ name: 'John Doe Updated', email: 'aaa@gmail.com', phone: '123123123' }),
-      ).rejects.toThrowError(),
+      ).rejects.toThrow(Error),
     );
   });
 });
