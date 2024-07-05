@@ -4,9 +4,8 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { useGetStockQuote, useGetStockHistory, useGetStockRecommendation } from '@/Api/StockApi';
 import { StockQuote, StockHistory, StockRecommendation } from '@/types';
 
-const API_BASE_URL = 'http://localhost:3000';
-
 // Mock environment variable
+const API_BASE_URL = 'http://localhost:3000';
 vi.stubGlobal('import.meta', {
   env: {
     VITE_API_BASE_URL: API_BASE_URL,

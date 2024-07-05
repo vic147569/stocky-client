@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/return-await */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { vi, describe, it, expect, beforeEach } from 'vitest';
-import { renderHook, waitFor } from '@testing-library/react';
+import { act, renderHook, waitFor } from '@testing-library/react';
 import * as clerk from '@clerk/clerk-react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { useCreateUser, useGetUser, useUpdateUser } from '@/Api/UserApi';
@@ -41,7 +41,7 @@ describe('useCreateUser', () => {
 
     const { result } = renderHook(() => useCreateUser(), { wrapper });
 
-    await result.current.createUser({ userId: '123', name: 'John Doe', email: 'aaa@gmail.com' });
+    await act(() => result.current.createUser({ userId: '123', name: 'John Doe', email: 'aaa@gmail.com' }));
 
     await waitFor(() => result.current.isSuccess);
 
@@ -118,7 +118,9 @@ describe('useUpdateUser', () => {
 
     const { result } = renderHook(() => useUpdateUser(), { wrapper });
 
-    await result.current.updateUser({ name: 'John Doe Updated', email: 'aaa@gmail.com', phone: '123123123' });
+    await act(() =>
+      result.current.updateUser({ name: 'John Doe Updated', email: 'aaa@gmail.com', phone: '123123123' }),
+    );
 
     await waitFor(() => result.current.isSuccess);
 

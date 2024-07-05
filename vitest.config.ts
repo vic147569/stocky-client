@@ -13,7 +13,7 @@ export default mergeConfig(
       include: ['./**/*.test.{ts,tsx}'],
       coverage: {
         include: ['**/src/**'],
-        exclude: ['**/tests/**'],
+        exclude: ['**/tests/**', '**/ui/**'],
         reporter: ['text', 'json', 'html'],
         reportsDirectory: './tests/coverage',
       },

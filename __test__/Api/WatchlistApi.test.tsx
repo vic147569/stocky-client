@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { QueryClient, QueryClientProvider } from 'react-query';
 import * as clerk from '@clerk/clerk-react';
-import { renderHook, waitFor } from '@testing-library/react';
+import { act, renderHook, waitFor } from '@testing-library/react';
 import { useCreateWatchlist, useGetIsInWatchlist, useGetWatchlist, useUpdateWatchlist } from '@/Api/WatchlistApi';
 
 const API_BASE_URL = 'http://localhost:3000';
@@ -42,6 +42,7 @@ beforeEach(() => {
 
 describe('useCreateWatchlist', () => {
   it('should create watchlist successfully', async () => {
+    // mock fetch res
     mockFetch.mockResolvedValueOnce({
       ok: true,
       json: async () => {},
@@ -49,7 +50,7 @@ describe('useCreateWatchlist', () => {
 
     const { result } = renderHook(() => useCreateWatchlist(), { wrapper });
 
-    await result.current.createWatchlist({ userId: '123123', stockList: [] });
+    await act(() => result.current.createWatchlist({ userId: '123123', stockList: [] }));
 
     await waitFor(() => result.current.isSuccess);
 
@@ -58,10 +59,10 @@ describe('useCreateWatchlist', () => {
   });
 
   it('should handle create watchlist error', async () => {
+    // mock fetch res
     mockFetch.mockResolvedValueOnce({
       ok: false,
     });
-
     const { result } = renderHook(() => useCreateWatchlist(), { wrapper });
 
     await waitFor(() =>
@@ -78,6 +79,7 @@ describe('useCreateWatchlist', () => {
 
 describe('useGetWatchlist', () => {
   it('should fetch watchlist data successfully', async () => {
+    // mock fetch res
     mockFetch.mockResolvedValueOnce({
       ok: true,
       json: async () => ({ userId: '123123', stockList: ['AAPL', 'NVDA'] }),
@@ -91,6 +93,7 @@ describe('useGetWatchlist', () => {
   });
 
   it('should handle fetch watchlist error', async () => {
+    // mock fetch res
     mockFetch.mockResolvedValueOnce({
       ok: false,
     });
@@ -104,6 +107,7 @@ describe('useGetWatchlist', () => {
 
 describe('useUpdateWatchlist', () => {
   it('should update watchlist successfully', async () => {
+    // mock fetch res
     mockFetch.mockResolvedValueOnce({
       ok: true,
       json: async () => ({ userId: '123123', stockList: ['AAPL', 'NVDA'] }),
@@ -111,7 +115,7 @@ describe('useUpdateWatchlist', () => {
 
     const { result } = renderHook(() => useUpdateWatchlist('NVDA'), { wrapper });
 
-    await result.current.updateWatchlist();
+    await act(() => result.current.updateWatchlist());
 
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     expect(result.current.isSuccess).toBe(true);
@@ -119,6 +123,7 @@ describe('useUpdateWatchlist', () => {
   });
 
   it('should handle update watchlist error', async () => {
+    // mock fetch res
     mockFetch.mockResolvedValueOnce({
       ok: false,
     });
