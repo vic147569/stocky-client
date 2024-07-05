@@ -46,8 +46,8 @@ const QuoteCard = () => {
             <CardTitle className=" text-5xl font-bold">{stockQuote?.symbol}</CardTitle>
             <CardDescription>{stockQuote?.name}</CardDescription>
           </div>
-          <Toggle pressed={status} onPressedChange={handleToggle}>
-            <Star />
+          <Toggle pressed={status} onPressedChange={handleToggle} data-testid="toggle-button">
+            <Star data-testid="star-icon-filled" />
           </Toggle>
         </div>
         <div className=" text-2xl flex gap-3">
