@@ -64,6 +64,7 @@ describe('useCreateUser', () => {
         async () => await result.current.createUser({ userId: '123', name: 'John Doe', email: 'aaa@gmail.com' }),
       ).rejects.toThrowError(),
     );
+    await waitFor(() => result.current.isError);
 
     expect(result.current.isError).toBe(true);
     expect(result.current.isLoading).toBe(false);
