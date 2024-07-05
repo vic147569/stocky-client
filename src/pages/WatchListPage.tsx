@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/Components/ui/card';
 import { Table, TableBody, TableCaption, TableHead, TableHeader, TableRow } from '@/Components/ui/table';
 
 const WatchlistPage = () => {
-  const { watchlist } = useGetWatchlist();
+  const { data: watchlist } = useGetWatchlist();
 
   return (
     <Card className=" bg-slate-800 text-white">
