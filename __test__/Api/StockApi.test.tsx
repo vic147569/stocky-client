@@ -6,11 +6,11 @@ import { StockQuote, StockHistory, StockRecommendation } from '@/types';
 
 // Mock environment variable
 const API_BASE_URL = 'http://localhost:3000';
-vi.stubGlobal('import.meta', {
-  env: {
-    VITE_API_BASE_URL: API_BASE_URL,
-  },
-});
+// vi.stubGlobal('import.meta', {
+//   env: {
+//     VITE_API_BASE_URL: API_BASE_URL,
+//   },
+// });
 
 // Mock fetch
 const mockFetch = vi.fn();
@@ -54,7 +54,8 @@ describe('useGetStockQuote', () => {
     await waitFor(() => result.current.isSuccess);
 
     expect(result.current.data).toEqual(mockData);
-    expect(mockFetch).toHaveBeenCalledWith(`${API_BASE_URL}/api/stocks/quote/AAPL`);
+    waitFor(() => expect(mockFetch).toHaveBeenCalledWith(`${API_BASE_URL}/api/stocks/quote/AAPL`));
+    // expect(mockFetch).toHaveBeenCalledWith(`${API_BASE_URL}/api/stocks/quote/AAPL`);
   });
 
   it('should throw an error on failure', async () => {

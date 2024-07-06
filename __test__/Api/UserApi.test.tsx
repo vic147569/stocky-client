@@ -7,11 +7,11 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { useCreateUser, useGetUser, useUpdateUser } from '@/Api/UserApi';
 
 const API_BASE_URL = 'http://localhost:3000';
-vi.stubGlobal('import.meta', {
-  env: {
-    VITE_API_BASE_URL: API_BASE_URL,
-  },
-});
+// vi.stubGlobal('import.meta', {
+//   env: {
+//     VITE_API_BASE_URL: API_BASE_URL,
+//   },
+// });
 
 vi.mock('@clerk/clerk-react');
 

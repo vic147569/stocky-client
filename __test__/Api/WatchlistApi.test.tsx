@@ -6,11 +6,11 @@ import { act, renderHook, waitFor } from '@testing-library/react';
 import { useCreateWatchlist, useGetIsInWatchlist, useGetWatchlist, useUpdateWatchlist } from '@/Api/WatchlistApi';
 
 const API_BASE_URL = 'http://localhost:3000';
-vi.stubGlobal('import.meta', {
-  env: {
-    VITE_API_BASE_URL: API_BASE_URL,
-  },
-});
+// vi.stubGlobal('import.meta', {
+//   env: {
+//     VITE_API_BASE_URL: API_BASE_URL,
+//   },
+// });
 
 // mock query client
 const queryClient = new QueryClient({
