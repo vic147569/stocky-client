@@ -23,6 +23,9 @@ jobs:
       - name: Install dependency
         run: npm install
 
+      - name: Set up environment variables
+        run: echo "VITE_API_BASE_URL=${{ secrets.VITE_API_BASE_URL }}" >> $GITHUB_ENV
+
       - name: Run test
         env:
           API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
