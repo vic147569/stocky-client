@@ -25,3 +25,5 @@ jobs:
 
       - name: Run test
         run: npm run test
+        env:
+          VITE_API_BASE_URL: ${{vars.VITE_API_BASE_URL}}
