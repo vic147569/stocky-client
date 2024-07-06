@@ -27,6 +27,4 @@ jobs:
         run: echo "VITE_API_BASE_URL=${{ secrets.VITE_API_BASE_URL }}" >> $GITHUB_ENV
 
       - name: Run test
-        env:
-          API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
         run: npm run test
