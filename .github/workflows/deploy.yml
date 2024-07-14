@@ -31,6 +31,6 @@ jobs:
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_KEY }}
+          key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           source: 'dist/'
           target: '/var/www/html'
