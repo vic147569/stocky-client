@@ -23,6 +23,8 @@ jobs:
 
       - name: Build project
         run: npm run build
+      - name: List build directory contents
+        run: ls -al dist
 
       - name: Deploy to EC2
         uses: appleboy/scp-action@master
