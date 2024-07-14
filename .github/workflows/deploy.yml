@@ -1,4 +1,4 @@
-name: Deploy to AWS EC2
+name: Deploy to EC2
 
 on:
   push:
@@ -10,38 +10,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.4
         with:
-          node-version: '18'
+          ssh-private-key: ${{ secrets.EC2_KEY }}
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build project
-        run: npm run build
-
-      - name: List build directory contents
-        run: ls -al dist
-
-      - name: Deploy to EC2
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          EC2_KEY: ${{ secrets.EC2_KEY }}
+      - name: Copy files to EC2
         run: |
-          echo "${{ secrets.EC2_KEY }}" > ec2-key.pem
-          chmod 400 ec2-key.pem
-          echo "Trying to connect to ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} with key ec2-key.pem"
-
-      - name: Deploy to EC2
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: $ec2-key.pem
-          source: 'dist/'
-          target: '/var/www/html'
+          scp -i ${{ secrets.EC2_KEY }} -r ./dist/* ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/var/www/html/
