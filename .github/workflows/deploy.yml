@@ -55,10 +55,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Decode SSH key
+        run: |
+          echo "${{ secrets.EC2_KEY }}" | base64 --decode > private_key.pem
+          chmod 600 private_key.pem
+
       - name: Set up SSH
-        uses: webfactory/ssh-agent@v0.5.4
-        with:
-          ssh-private-key: ${{ secrets.EC2_KEY }}
+        run: |
+          eval "$(ssh-agent -s)"
+          ssh-add private_key.pem
 
       - name: Install dependencies and build
         run: |
@@ -67,4 +72,4 @@ jobs:
 
       - name: Copy files to EC2
         run: |
-          scp -o StrictHostKeyChecking=no -i <(echo "$SSH_PRIVATE_KEY") -r ./dist/* ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/var/www/html/
+          scp -o StrictHostKeyChecking=no -i private_key.pem -r ./dist/* ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/var/www/html/
