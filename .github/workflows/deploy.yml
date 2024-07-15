@@ -29,7 +29,7 @@ jobs:
           chmod 400 ec2-key.pem
           echo "Trying to connect to ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} with key ec2-key.pem"
 
-          ssh -i ec2-key.pem -o StrictHostKeyChecking=no -t ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+          ssh -i ec2-key.pem -o StrictHostKeyChecking=no -t -t ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
             rm -rf stocky-client
             git clone https://github.com/vic147569/stocky-client.git
             cd /home/${{ secrets.EC2_USER }}/stocky-client
