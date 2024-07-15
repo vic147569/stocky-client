@@ -11,7 +11,6 @@ import WatchlistPage from '@/Pages/WatchlistPage';
 const router = createBrowserRouter(
   [
     {
-      // path: '/',
       element: <App />,
       children: [
         { path: '/', element: <HomePage /> },
@@ -24,7 +23,7 @@ const router = createBrowserRouter(
       ],
     },
   ],
-  { basename: '/stocky-client/' },
+  { basename: '/' },
 );
 
 export default router;
