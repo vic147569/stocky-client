@@ -5,7 +5,6 @@ import viteConfig from './vite.config';
 export default mergeConfig(
   viteConfig,
   defineConfig({
-    // base: '/stocky-client/',
     test: {
       root: './',
       globals: true,

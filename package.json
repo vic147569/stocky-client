@@ -10,7 +10,6 @@
     "email": "patrickjmeurer@gmail.com",
     "url": "https://github.com/potreco"
   },
-  "homepage": "/",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

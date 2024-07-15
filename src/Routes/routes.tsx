@@ -8,22 +8,19 @@ import ProfilePage from '@/Pages/ProfilePage';
 import DetailPage from '@/Pages/Detail';
 import WatchlistPage from '@/Pages/WatchlistPage';
 
-const router = createBrowserRouter(
-  [
-    {
-      element: <App />,
-      children: [
-        { path: '/', element: <HomePage /> },
-        { path: '/sign-in/*', element: <SignInPage /> },
-        { path: '/sign-up/*', element: <SignUpPage /> },
-        { path: '/auth-callback', element: <AuthCallbackPage /> },
-        { path: '/user-profile', element: <ProfilePage /> },
-        { path: '/watchlist', element: <WatchlistPage /> },
-        { path: '/stock/:symbol', element: <DetailPage /> },
-      ],
-    },
-  ],
-  { basename: '/' },
-);
+const router = createBrowserRouter([
+  {
+    element: <App />,
+    children: [
+      { path: '/', element: <HomePage /> },
+      { path: '/sign-in/*', element: <SignInPage /> },
+      { path: '/sign-up/*', element: <SignUpPage /> },
+      { path: '/auth-callback', element: <AuthCallbackPage /> },
+      { path: '/user-profile', element: <ProfilePage /> },
+      { path: '/watchlist', element: <WatchlistPage /> },
+      { path: '/stock/:symbol', element: <DetailPage /> },
+    ],
+  },
+]);
 
 export default router;
