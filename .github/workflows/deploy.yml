@@ -38,4 +38,5 @@ jobs:
             echo "VITE_CLERK_SIGN_UP_FORCE_REDIRECT_URL=${{ secrets.VITE_CLERK_SIGN_UP_FORCE_REDIRECT_URL }}" >> .env
             echo "VITE_FRONTEND_URL=${{ secrets.VITE_FRONTEND_URL }}" >> .env
             npm install
+            npm run build
           EOF
