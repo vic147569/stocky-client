@@ -11,6 +11,7 @@ import WatchlistPage from '@/Pages/WatchlistPage';
 const router = createBrowserRouter(
   [
     {
+      path: '/',
       element: <App />,
       children: [
         { path: '/', element: <HomePage /> },
