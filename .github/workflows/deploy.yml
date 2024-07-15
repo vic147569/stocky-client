@@ -47,17 +47,14 @@ jobs:
           VITE_CLERK_SIGN_UP_FORCE_REDIRECT_URL: ${{ secrets.VITE_CLERK_SIGN_UP_FORCE_REDIRECT_URL }}
           VITE_FRONTEND_URL: ${{ secrets.VITE_FRONTEND_URL }}
 
-      # - name: Setup Pages
-      #   uses: actions/configure-pages@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v2
         with:
           # Upload entire repository
           path: './dist'
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
 
       - name: Deploy to GitHub Pages
         id: deployment
