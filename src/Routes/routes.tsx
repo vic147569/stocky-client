@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-useless-fragment */
 import { createBrowserRouter } from 'react-router-dom';
 import App from '@/App';
 import HomePage from '@/Pages/Home';
@@ -12,64 +11,16 @@ import WatchlistPage from '@/Pages/WatchlistPage';
 const router = createBrowserRouter(
   [
     {
+      path: '/',
       element: <App />,
       children: [
-        {
-          path: '/',
-          element: (
-            <>
-              <HomePage />
-            </>
-          ),
-        },
-        {
-          path: '/sign-in/*',
-          element: (
-            <>
-              <SignInPage />
-            </>
-          ),
-        },
-        {
-          path: '/sign-up/*',
-          element: (
-            <>
-              <SignUpPage />
-            </>
-          ),
-        },
-        {
-          path: '/auth-callback',
-          element: (
-            <>
-              <AuthCallbackPage />
-            </>
-          ),
-        },
-        {
-          path: '/user-profile',
-          element: (
-            <>
-              <ProfilePage />
-            </>
-          ),
-        },
-        {
-          path: '/watchlist',
-          element: (
-            <>
-              <WatchlistPage />
-            </>
-          ),
-        },
-        {
-          path: '/stock/:symbol',
-          element: (
-            <>
-              <DetailPage />
-            </>
-          ),
-        },
+        { path: '/', element: <HomePage /> },
+        { path: '/sign-in/*', element: <SignInPage /> },
+        { path: '/sign-up/*', element: <SignUpPage /> },
+        { path: '/auth-callback', element: <AuthCallbackPage /> },
+        { path: '/user-profile', element: <ProfilePage /> },
+        { path: '/watchlist', element: <WatchlistPage /> },
+        { path: '/stock/:symbol', element: <DetailPage /> },
       ],
     },
   ],
