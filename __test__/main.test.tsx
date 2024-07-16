@@ -2,6 +2,7 @@ import { vi } from 'vitest';
 import '@testing-library/jest-dom';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
+import { Suspense } from 'react';
 import router from '@/Routes/routes';
 
 // Mock the router
@@ -31,6 +32,10 @@ describe('Root rendering', () => {
     // Ensure createRoot and render are called correctly
     expect(getElementByIdSpy).toHaveBeenCalledWith('root');
     expect(createRootSpy).toHaveBeenCalledWith(expect.any(HTMLElement));
-    expect(root.render).toHaveBeenCalledWith(<RouterProvider router={router} />);
+    expect(root.render).toHaveBeenCalledWith(
+      <Suspense fallback={<div>Loading</div>}>
+        <RouterProvider router={router} />
+      </Suspense>,
+    );
   });
 });
