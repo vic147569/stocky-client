@@ -75,7 +75,7 @@ jobs:
   # Single deploy job since we're just deploying
   deploy:
     environment:
-      name: Dev
+      name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
@@ -91,8 +91,11 @@ jobs:
       - name: Build
         # 要改動的是這裡，我們將設定好的環境變數在這個地方置入，build完的檔案
         # 才吃的到這個變數。
-        # env:
-        #   VITE_BASENAME: ${{ secrets.VITE_BASENAME}}
+        env:
+          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL}}
+          VITE_CLERK_PUBLISHABLE_KEY: ${{ secrets.VITE_CLERK_PUBLISHABLE_KEY}}
+          VITE_CLERK_SIGN_UP_FORCE_REDIRECT_URL: ${{ secrets.VITE_CLERK_SIGN_UP_FORCE_REDIRECT_URL}}
+          VITE_FRONTEND_URL: ${{ secrets.VITE_FRONTEND_URL}}
         run: npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v3
