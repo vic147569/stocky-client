@@ -6,6 +6,6 @@ import router from './Routes/routes';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <Suspense fallback={<div>Loading</div>}>
-    <RouterProvider router={router} />, //{' '}
+    <RouterProvider router={router} />
   </Suspense>,
 );

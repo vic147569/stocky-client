@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createBrowserRouter } from 'react-router-dom';
+import { createHashRouter } from 'react-router-dom';
 import { lazy } from 'react';
 import App from '@/App';
 // import HomePage from '@/Pages/Home';
@@ -18,7 +18,7 @@ const ProfilePage = lazy(() => import('@/Pages/ProfilePage'));
 const DetailPage = lazy(() => import('@/Pages/Detail'));
 const WatchlistPage = lazy(() => import('@/Pages/WatchlistPage'));
 
-const router = createBrowserRouter(
+const router = createHashRouter(
   [
     {
       path: '/',
@@ -34,7 +34,7 @@ const router = createBrowserRouter(
       ],
     },
   ],
-  { basename: '/stocky-client' },
+  // { basename: '/stocky-client' },
 );
 
 export default router;
