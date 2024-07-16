@@ -26,7 +26,7 @@ const App: React.FC = () => {
     <QueryClientProvider client={queryClient}>
       <ClerkProvider
         routerPush={(to) => navigate(to)}
-        routerReplace={(to) => navigate(to, { replace: true })}
+        routerReplace={(to) => navigate(to, { replace: false })}
         publishableKey={PUBLISHABLE_KEY}
         signUpForceRedirectUrl={`${SIGNUP_REDIRECT_URL}/auth-callback`}
       >
