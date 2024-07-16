@@ -28,7 +28,7 @@ const App: React.FC = () => {
         routerPush={(to) => navigate(to)}
         routerReplace={(to) => navigate(to, { replace: true })}
         publishableKey={PUBLISHABLE_KEY}
-        signUpFallbackRedirectUrl={SIGNUP_URL}
+        signUpForceRedirectUrl={SIGNUP_URL}
       >
         <Layout>
           <Outlet />
