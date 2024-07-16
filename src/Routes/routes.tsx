@@ -27,7 +27,7 @@ const router = createBrowserRouter(
       ],
     },
   ],
-  { basename: '/stocky-client' },
+  // { basename: '/stocky-client' },
 );
 
 export default router;
