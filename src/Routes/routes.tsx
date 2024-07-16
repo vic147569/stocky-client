@@ -34,7 +34,7 @@ const router = createBrowserRouter(
       ],
     },
   ],
-  { basename: '/stocky-client' },
+  { basename: 'https://vic147569.github.io/stocky-client/' },
 );
 
 export default router;
