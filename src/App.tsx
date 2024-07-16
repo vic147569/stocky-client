@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { ClerkProvider } from '@clerk/clerk-react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Toaster } from 'sonner';
@@ -18,22 +18,22 @@ const queryClient = new QueryClient({
   },
 });
 
-const App: React.FC = () => (
-  // const navigate = useNavigate();
-
-  <QueryClientProvider client={queryClient}>
-    <ClerkProvider
-      // routerPush={(to) => navigate(to)}
-      // routerReplace={(to) => navigate(to, { replace: true })}
-      publishableKey={PUBLISHABLE_KEY}
-      signUpForceRedirectUrl="/auth-callback"
-    >
-      <Layout>
-        <Outlet />
-        <Toaster visibleToasts={1} position="top-right" richColors />
-      </Layout>
-    </ClerkProvider>
-  </QueryClientProvider>
-);
-
+const App: React.FC = () => {
+  const navigate = useNavigate();
+  return (
+    <QueryClientProvider client={queryClient}>
+      <ClerkProvider
+        routerPush={(to) => navigate(to)}
+        routerReplace={(to) => navigate(to, { replace: true })}
+        publishableKey={PUBLISHABLE_KEY}
+        signUpForceRedirectUrl="/auth-callback"
+      >
+        <Layout>
+          <Outlet />
+          <Toaster visibleToasts={1} position="top-right" richColors />
+        </Layout>
+      </ClerkProvider>
+    </QueryClientProvider>
+  );
+};
 export default App;
