@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable react-refresh/only-export-components */
 import { createBrowserRouter } from 'react-router-dom';
-import { lazy } from 'react';
+// import { lazy } from 'react';
 import App from '@/App';
 import HomePage from '@/Pages/Home';
 import SignInPage from '@/Pages/sign-in';
