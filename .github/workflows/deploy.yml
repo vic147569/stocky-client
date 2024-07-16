@@ -1,109 +1,37 @@
-# # Simple workflow for deploying static content to GitHub Pages
-# name: Deploy static content to Pages
-
-# on:
-#   # Runs on pushes targeting the default branch
-#   push:
-#     branches: ['main']
-
-#   # Allows you to run this workflow manually from the Actions tab
-#   workflow_dispatch:
-
-# # Sets the GITHUB_TOKEN permissions to allow deployment to GitHub Pages
-# permissions:
-#   contents: read
-#   pages: write
-#   id-token: write
-
-# # Allow one concurrent deployment
-# concurrency:
-#   group: 'pages'
-#   cancel-in-progress: true
-
-# jobs:
-#   # Single deploy job since we're just deploying
-#   deploy:
-#     environment:
-#       name: github-pages
-#       url: ${{ steps.deployment.outputs.page_url }}
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout
-#         uses: actions/checkout@v4
-#       - name: Set up Node
-#         uses: actions/setup-node@v4
-#         with:
-#           node-version: 20
-#           cache: 'npm'
-#       - name: Install dependencies
-#         run: npm ci
-#       - name: Build
-#         run: npm run build
-#       - name: Setup Pages
-#         uses: actions/configure-pages@v4
-#       - name: Upload artifact
-#         uses: actions/upload-pages-artifact@v3
-#         with:
-#           # Upload dist folder
-#           path: './dist'
-#       - name: Deploy to GitHub Pages
-#         id: deployment
-#         uses: actions/deploy-pages@v4
-# Simple workflow for deploying static content to GitHub Pages
-name: Deploy static content to Pages
+name: Deploy to EC2
 
 on:
-  # Runs on pushes targeting the default branch
   push:
-    branches: ['main']
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# Sets the GITHUB_TOKEN permissions to allow deployment to GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-# Allow one concurrent deployment
-concurrency:
-  group: 'pages'
-  cancel-in-progress: true
+    branches:
+      - main
 
 jobs:
-  # Single deploy job since we're just deploying
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Set up Node
-        uses: actions/setup-node@v3
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Decode SSH key
+        run: |
+          echo "${{ secrets.EC2_KEY }}" | base64 --decode > private_key.pem
+          chmod 600 private_key.pem
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.4
         with:
-          node-version: 18
-          cache: 'npm'
-      - name: Install dependencies
-        run: npm install
-      - name: Build
-        # 要改動的是這裡，我們將設定好的環境變數在這個地方置入，build完的檔案
-        # 才吃的到這個變數。
-        env:
-          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL}}
-          VITE_CLERK_PUBLISHABLE_KEY: ${{ secrets.VITE_CLERK_PUBLISHABLE_KEY}}
-          VITE_CLERK_SIGN_UP_FORCE_REDIRECT_URL: ${{ secrets.VITE_CLERK_SIGN_UP_FORCE_REDIRECT_URL}}
-          VITE_FRONTEND_URL: ${{ secrets.VITE_FRONTEND_URL}}
-        run: npm run build
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
-        with:
-          # Upload dist repository
-          path: './dist'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v1
+          ssh-private-key: ${{ secrets.EC2_KEY }}
+
+      - name: Fix permissions on EC2 directory
+        run: |
+          ssh -o StrictHostKeyChecking=no -i private_key.pem user@your_ec2_host "sudo chmod -R 755 /var/www/html/ && sudo chown -R user:user /var/www/html/"
+
+      - name: Install dependencies and build
+        run: |
+          npm install
+          npm run build
+
+      - name: Copy files to EC2
+        run: |
+          scp -o StrictHostKeyChecking=no -i private_key.pem -r ./dist/* user@your_ec2_host:/var/www/html/
