@@ -18,8 +18,8 @@ const router = createBrowserRouter(
       element: <App />,
       children: [
         { path: '/', element: <HomePage /> },
-        { path: '/sign-in/*', element: <SignInPage /> },
-        { path: '/sign-up/*', element: <SignUpPage /> },
+        { path: '/sign-in', element: <SignInPage /> },
+        { path: '/sign-up', element: <SignUpPage /> },
         { path: '/auth-callback', element: <AuthCallbackPage /> },
         { path: '/user-profile', element: <ProfilePage /> },
         { path: '/watchlist', element: <WatchlistPage /> },
