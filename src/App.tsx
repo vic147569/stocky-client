@@ -28,7 +28,7 @@ const App: React.FC = () => {
         routerPush={(to) => navigate(to)}
         routerReplace={(to) => navigate(to, { replace: true })}
         publishableKey={PUBLISHABLE_KEY}
-        signUpForceRedirectUrl={`${SIGNUP_REDIRECT_URL}auth-callback`}
+        signUpForceRedirectUrl={`${SIGNUP_REDIRECT_URL}/auth-callback`}
       >
         <Layout>
           <Outlet />
