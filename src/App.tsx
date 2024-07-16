@@ -21,14 +21,14 @@ const queryClient = new QueryClient({
 const App: React.FC = () => {
   const navigate = useNavigate();
 
-  const SIGNUP_URL = import.meta.env.VITE_CLERK_SIGN_UP_FORCE_REDIRECT_URL;
+  // const SIGNUP_URL = import.meta.env.VITE_CLERK_SIGN_UP_FORCE_REDIRECT_URL;
   return (
     <QueryClientProvider client={queryClient}>
       <ClerkProvider
         routerPush={(to) => navigate(to)}
         routerReplace={(to) => navigate(to, { replace: true })}
         publishableKey={PUBLISHABLE_KEY}
-        signUpFallbackRedirectUrl={`${SIGNUP_URL}/auth-callback`}
+        signUpFallbackRedirectUrl="/auth-callback"
       >
         <Layout>
           <Outlet />
