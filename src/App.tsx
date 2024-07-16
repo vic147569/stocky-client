@@ -18,24 +18,22 @@ const queryClient = new QueryClient({
   },
 });
 
-const App: React.FC = () => {
+const App: React.FC = () => (
   // const navigate = useNavigate();
-  const SIGNUP_REDIRECT_URL = import.meta.env.VITE_CLERK_SIGN_UP_FORCE_REDIRECT_URL;
 
-  return (
-    <QueryClientProvider client={queryClient}>
-      <ClerkProvider
-        // routerPush={(to) => navigate(to)}
-        // routerReplace={(to) => navigate(to, { replace: true })}
-        publishableKey={PUBLISHABLE_KEY}
-        signUpForceRedirectUrl={`${SIGNUP_REDIRECT_URL}/auth-callback`}
-      >
-        <Layout>
-          <Outlet />
-          <Toaster visibleToasts={1} position="top-right" richColors />
-        </Layout>
-      </ClerkProvider>
-    </QueryClientProvider>
-  );
-};
+  <QueryClientProvider client={queryClient}>
+    <ClerkProvider
+      // routerPush={(to) => navigate(to)}
+      // routerReplace={(to) => navigate(to, { replace: true })}
+      publishableKey={PUBLISHABLE_KEY}
+      signUpForceRedirectUrl="http://47.129.37.44/auth-callback"
+    >
+      <Layout>
+        <Outlet />
+        <Toaster visibleToasts={1} position="top-right" richColors />
+      </Layout>
+    </ClerkProvider>
+  </QueryClientProvider>
+);
+
 export default App;
