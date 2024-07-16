@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { ClerkProvider } from '@clerk/clerk-react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Toaster } from 'sonner';
