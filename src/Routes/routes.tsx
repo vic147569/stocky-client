@@ -1,14 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-refresh/only-export-components */
-import { createHashRouter } from 'react-router-dom';
+import { createBrowserRouter, createHashRouter } from 'react-router-dom';
 import { lazy } from 'react';
 import App from '@/App';
-// import HomePage from '@/Pages/Home';
-// import SignInPage from '@/Pages/sign-in';
-// import SignUpPage from '@/Pages/sign-up';
-// import AuthCallbackPage from '@/Pages/AuthCallbackPage';
-// import ProfilePage from '@/Pages/ProfilePage';
-// import DetailPage from '@/Pages/Detail';
-// import WatchlistPage from '@/Pages/WatchlistPage';
 
 const HomePage = lazy(() => import('@/Pages/Home'));
 const SignInPage = lazy(() => import('@/Pages/sign-in'));
@@ -18,7 +12,7 @@ const ProfilePage = lazy(() => import('@/Pages/ProfilePage'));
 const DetailPage = lazy(() => import('@/Pages/Detail'));
 const WatchlistPage = lazy(() => import('@/Pages/WatchlistPage'));
 
-const router = createHashRouter(
+const router = createBrowserRouter(
   [
     {
       path: '/',
@@ -34,7 +28,7 @@ const router = createHashRouter(
       ],
     },
   ],
-  // { basename: '/stocky-client' },
+  { basename: '/stocky-client' },
 );
 
 export default router;
