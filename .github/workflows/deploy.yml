@@ -27,6 +27,11 @@ jobs:
         run: |
           npm install
           npm run build
+        env:
+          VITE_API_BASE_URL: ${{secrets.VITE_API_BASE_URL}}
+          VITE_CLERK_PUBLISHABLE_KEY: ${{secrets.VITE_CLERK_PUBLISHABLE_KEY}}
+          VITE_CLERK_SIGN_UP_FORCE_REDIRECT_URL: ${{secrets.VITE_CLERK_SIGN_UP_FORCE_REDIRECT_URL}}
+          VITE_FRONTEND_URL: ${{secrets.VITE_FRONTEND_URL}}
 
       - name: Create remote directory if it doesn't exist
         run: |
