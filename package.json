@@ -10,7 +10,7 @@
     "email": "patrickjmeurer@gmail.com",
     "url": "https://github.com/potreco"
   },
-  "homepage": "https://vic147569.github.io/stocky-client/",
+  "homepage": "https://vic147569.github.io/stocky-client",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
