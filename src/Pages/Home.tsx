@@ -24,8 +24,6 @@ const HomePage = () => {
       hasCreatedUser.current = true;
       createWatchlist({ userId: user.id, stockList: [] });
       hasCreatedWatchlist.current = true;
-
-      // navigate('/');
     }
   }, [createUser, createWatchlist, navigate, user]);
 
